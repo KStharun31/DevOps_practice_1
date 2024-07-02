@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to my Flask App</h1>
+    <form id="greet-form">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" name="name">
+        <button type="submit">Greet</button>
+    </form>
+    <p id="greeting"></p>
+    <script>
+        document.getElementById('greet-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            fetch('/api/greet?name=' + name)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('greeting').textContent = data.message;
+                });
+        });
+    </script>
+</body>
+</html>
